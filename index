@@ -47,7 +47,7 @@ map.setMaxBounds([
 L.tileLayer('tiles/TravelTimes_base/{z}/{x}/{y}.png', {
   attribution: '&copy; 2015 Mapping Specialists',
   minZoom: 4,
-  maxZoom: 8
+  maxZoom: 6
 }).addTo(map);
 
 L.control.scale().addTo(map);
