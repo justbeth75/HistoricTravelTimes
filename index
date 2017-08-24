@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8" />
+<title>Mapping Specialists Travel Times</title>
+
+<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+
+<link href="css/travelmap.css" rel="stylesheet" type="text/css">
+	<!-- Leaflet -->
+<script src="js/leaflet-src.js"></script>
+<script src="js/travelTimes_geojson.js" type="text/javascript"></script>
+<link href="css/leaflet.css" rel="stylesheet" type="text/css">
+<link href="animation/leaflet.animation.css" rel="stylesheet">
+
+<!--raphael.js library is needed for animating routes-->
+<script src="./js/raphael.js" type="text/javascript" charset="utf-8"></script>
+<script src="animation/leaflet.animation.js"></script>
+
+
+</head>
+
+
+<!--wrapper holds all page content except the footer-->
+<div id="wrapper">
+
+<!--header holds h1 that names the page and creates the map nameplate-->
+<header>
+<h1>1800 Travel Times</h1>
+</header><!--closes header div-->
+
+<div id="map"></div>
+
+<script>
+
+var map = L.map('map', {
+    zoom: 5,
+    center: [36.505, -82.09],
+    
+});
+
+map.setMaxBounds([
+    [22.843102, -101.204367],
+    [50.135038, -63.806440]
+]);    
+
+L.tileLayer('tiles/TravelTimes_base/{z}/{x}/{y}.png', {
+  attribution: '&copy; 2015 Mapping Specialists',
+  minZoom: 4,
+  maxZoom: 8
+}).addTo(map);
+
+L.control.scale().addTo(map);
+
+
+		function onEachFeature(feature, layer) {
+			var popupContent = "<p>It took " +
+					feature.properties.popupContent + " to travel this far from New York city in 1800</p>";
+
+			
+			layer.bindPopup(popupContent);
+		}
+
+		L.geoJson([dayOne, dayTwo, dayThree, dayFour, dayFive, daySix, weekOne, weekTwo, weekThree, weekFour, weekFive, weekSix, bicycleRental], {
+
+			style: function (feature) {
+				return feature.properties && feature.properties.style;
+			},
+
+			onEachFeature: onEachFeature,
+
+			pointToLayer: function (feature, latlng) {
+				return L.circleMarker(latlng, {
+					radius: 8,
+					fillColor: "#ff7800",
+					color: "#000",
+					weight: 1,
+					opacity: 1,
+					fillOpacity: 0.8
+				});
+			}
+		}).addTo(map);
+
+
+</script>
+
+
+<!--footer>
+  <p>&copy; 2015 Mapping Specialists</p>
+</footer-->
+</body>
+</html>
